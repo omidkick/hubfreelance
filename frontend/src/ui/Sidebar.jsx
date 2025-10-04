@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useSidebar } from "../context/SidebarContext";
 import { AiOutlineClose } from "react-icons/ai";
 import useUser from "../features/authentication/useUser";
-import UserAvatar from "../features/authentication/UserAvatar";
 import { NavLink } from "react-router-dom";
 import { HiArrowLeftOnRectangle } from "react-icons/hi2";
 
@@ -13,6 +12,12 @@ function Sidebar({ children }) {
   useEffect(() => {
     document.body.style.overflow = isSidebarOpen ? "hidden" : "auto";
   }, [isSidebarOpen]);
+
+  const renderRole = {
+    ADMIN: "ادمین",
+    OWNER: "کارفرما",
+    FREELANCER: "فریلنسر",
+  };
 
   return (
     <>
@@ -50,10 +55,22 @@ function Sidebar({ children }) {
         <ul className="flex flex-col gap-y-4">{children}</ul>
 
         {/* login button or Avatar in mobile */}
-        <div className="mt-[17%] px-2 md:hidden">
+        <div className="mt-[20%] md:mt-[50%] px-2 ">
           {user ? (
             <div className="border-2 border-secondary-300 py-1 px-3 rounded-xl">
-              <UserAvatar />
+              <div className="flex items-center gap-x-4 md:gap-x-2 text-secondary-600">
+                <img
+                  className="w-7 h-7  rounded-full object-cover object-center"
+                  src="/images/user.jpg"
+                  alt="user-account"
+                />
+                <div className="flex flex-col justify-center">
+                  <span className="text-sm md:text-base">{user?.name}</span>
+                  <div className="text-xs text-primary-700 ">
+                    {renderRole[user.role] || "نقش ناشناخته"}
+                  </div>
+                </div>
+              </div>
             </div>
           ) : (
             <NavLink

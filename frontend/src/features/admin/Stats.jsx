@@ -3,10 +3,10 @@ import { BiCategoryAlt } from "react-icons/bi";
 import SingleStat from "../../ui/SingleStat";
 
 function Stats({ proposals, projects, users, categories }) {
-  const numOfUsers = users.length;
-  const numOfProjects = projects.length;
-  const numOfProposals = proposals.length;
-  const numOfCategories = categories.length;
+  const numOfUsers = users?.length;
+  const numOfProjects = projects?.length;
+  const numOfProposals = proposals?.length;
+  const numOfCategories = categories?.length;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">

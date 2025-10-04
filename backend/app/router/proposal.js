@@ -10,7 +10,7 @@ const router = require("express").Router();
 
 router.get(
   "/list",
-  authorize(ROLES.FREELANCER, ROLES.ADMIN),
+  authorize(ROLES.OWNER, ROLES.FREELANCER, ROLES.ADMIN),
   expressAsyncHandler(ProposalController.getListOfProposals)
 );
 router.post(

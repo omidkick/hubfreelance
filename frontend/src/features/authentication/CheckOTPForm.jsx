@@ -92,10 +92,12 @@ function CheckOTPForm({ phoneNumber, onBack, onResendOtp, otpResponse }) {
           onChange={setOtp}
           numInputs={6}
           renderSeparator={<span>-</span>}
-          renderInput={(props) => (
+          renderInput={(props, index) => (
             <input
               type="tel"
               inputMode="numeric"
+              name={`otp-${index}`}
+              id={`otp-${index}`}
               pattern="\d*"
               maxLength={1}
               {...props}
