@@ -36,13 +36,29 @@ class Application {
       .catch((err) => console.log("Failed to connect to MongoDB", err));
   }
   configServer() {
+    const allowedOrigins = process.env.ALLOW_CORS_ORIGIN?.split(",") || [];
+
     this.#app.use(
-      cors({ credentials: true, origin: process.env.ALLOW_CORS_ORIGIN })
+      cors({
+        credentials: true,
+        origin: function (origin, callback) {
+          // Allow requests with no origin (like curl, Postman, mobile apps)
+          if (!origin) return callback(null, true);
+
+          if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+          } else {
+            return callback(new Error("Not allowed by CORS"));
+          }
+        },
+      })
     );
+
     this.#app.use(express.json());
     this.#app.use(express.urlencoded({ extended: true }));
     this.#app.use(express.static(path.join(__dirname, "..")));
   }
+
   initClientSession() {
     this.#app.use(cookieParser(process.env.COOKIE_PARSER_SECRET_KEY));
   }
